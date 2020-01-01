@@ -1,0 +1,27 @@
+#include <iostream>
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+
+int main ()
+{
+   int a[3];
+   while(scanf("%d%d%d",&a[0],&a[1],&a[2]))
+   {
+      int max=0,maxi=0;
+      for (int i=0;i<3;i++)
+      {
+         if (a[i]>max)
+         {
+            max=a[i];
+            maxi=i;
+         }
+      }
+      if (maxi==0&&a[0]>a[1]+a[2])printf("甲\n");
+      else if (maxi==0)printf("%s\n",a[1]>a[2]?"乙":"丙");
+      else if (maxi==1&&a[1]>a[0]+a[2])printf("乙\n");
+      else if (maxi==1)printf("%s\n",a[0]>a[2]?"甲":"丙");
+      else if (maxi==2&&a[2]>a[0]+a[1])printf("丙\n");
+      else if (maxi==2)printf("%s\n",a[0]>a[1]?"甲":"乙");
+   }
+}
