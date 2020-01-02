@@ -1,0 +1,119 @@
+#include <iostream>
+#include <cstdio>
+#include <set>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+
+int main ()
+{
+   int x,all=1;
+   while(scanf("%d",&x)!=EOF)
+   {
+      if (x==0)return 0;
+      
+      printf("Test Case %d:\n",all++);
+      char c[x][100];
+      for (int i=0;i<x;i++)
+      {
+         scanf("%s",c[i]);
+         set<char> s;
+         for (int k=0;k<strlen(c[i]);k++)
+               s.insert(c[i][k]);
+         printf("%c: {",char(65+i),c[i]);
+         for (set<char>::iterator it=s.begin();it!=s.end();it++)
+            printf("%c",*it);
+         printf("}\n");
+      }
+      for (int i=0;i<x;i++)
+      {
+         for (int j=i+1;j<x;j++)
+         {
+            printf("%c+%c: {",char(i+65),char(j+65));
+            set<char> s;
+            for (int k=0;k<strlen(c[i]);k++)
+               s.insert(c[i][k]);
+            for (int k=0;k<strlen(c[j]);k++)
+               s.insert(c[j][k]);
+            for (set<char>::iterator it=s.begin();it!=s.end();it++)
+               printf("%c",*it);
+            printf("}\n");
+         }
+      }
+      for (int i=0;i<x;i++)
+      {
+         for (int j=i+1;j<x;j++)
+         {
+            printf("%c*%c: {",char(i+65),char(j+65));
+            set<char> s,s2;
+            for (int k=0;k<strlen(c[i]);k++)
+               s.insert(c[i][k]);
+            for (int k=0;k<strlen(c[j]);k++)
+               s2.insert(c[j][k]);
+            for (set<char>::iterator it=s.begin();it!=s.end();it++)
+            {
+               set<char>::iterator it2;
+               it2=find(s2.begin(),s2.end(),*it);
+               if (it2!=s2.end())
+               {
+                  printf("%c",*it2);
+               }
+            }
+            printf("}\n");
+         }
+      }
+      for (int i=0;i<x;i++)
+      {
+         for (int j=0;j<x;j++)
+         {
+            if (i!=j)
+            {
+               printf("%c-%c: {",char(i+65),char(j+65));
+               set<char> s,s2;
+               for (int k=0;k<strlen(c[i]);k++)
+                  s.insert(c[i][k]);
+               for (int k=0;k<strlen(c[j]);k++)
+                  s2.insert(c[j][k]);
+               for (set<char>::iterator it=s.begin();it!=s.end();it++)
+               {
+                  set<char>::iterator it2;
+                  it2=find(s2.begin(),s2.end(),*it);
+                  if (it2==s2.end())
+                  {
+                     printf("%c",*it);
+                  }
+               }
+               printf("}\n");
+            }
+         }
+      }
+      for (int i=0;i<x;i++)
+      {
+         for (int j=0;j<x;j++)
+         {
+            if (i!=j)
+            {
+               bool t=true;
+               set<char> s,s2;
+               for (int k=0;k<strlen(c[i]);k++)
+                  s.insert(c[i][k]);
+               for (int k=0;k<strlen(c[j]);k++)
+                  s2.insert(c[j][k]);
+               for (set<char>::iterator it=s2.begin();it!=s2.end();it++)
+               {
+                  set<char>::iterator it2;
+                  it2=find(s.begin(),s.end(),*it);  
+                  if (it2==s.end())
+                  {
+                     t=false;
+                     break;
+                  }
+               }
+               if (t==0) printf("%c does not contain %c\n",char(i+65),char(j+65));
+               else printf("%c contains %c\n",char(i+65),char(j+65));
+            }
+         }
+      }
+      if (all==x-1)all=0;
+   }
+}
