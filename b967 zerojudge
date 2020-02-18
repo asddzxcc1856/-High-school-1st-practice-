@@ -1,0 +1,56 @@
+#include <cstdio>
+#include <cstring>
+#include <vector>
+using namespace std;
+
+vector<int> v[100001];
+bool visit[100001];
+int maxh1,point;
+
+void dfs(int n,int k)
+{
+   visit[n]=true;
+   for (int i=0;i<v[n].size();i++)
+   {
+      if(visit[v[n][i]]==false)
+      {
+         visit[v[n][i]]=true;
+         dfs(v[n][i],k+1);
+         if(k+1>maxh1)
+         {
+            maxh1=k+1;
+            point=v[n][i];
+         }
+      }
+   }
+}
+
+
+int main ()
+{
+   int n;
+   while(scanf("%d",&n)!=EOF)
+   {
+      
+      if(n==0)return 0;
+      for (int i=0;i<=n;i++)
+      {
+         v[i].clear();
+      }
+      maxh1=0;
+      point=0;
+      int x,y;
+      for (int i=1;i<n;i++)
+      {
+         scanf("%d%d",&x,&y);
+         v[x].push_back(y);
+         v[y].push_back(x);
+      }
+      memset(visit,0,sizeof(visit));
+      dfs(0,0);
+      memset(visit,0,sizeof(visit));
+      dfs(point,0);
+      printf("%d\n",maxh1);
+      
+   }
+}
